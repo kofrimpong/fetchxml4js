@@ -566,7 +566,7 @@ const genAttribute = (attr: IAttribute | string) => {
         out += ` groupby='${attr.groupby}'`
     }
     if (attr.aggregate) {
-        out += ` aggregate='${attr.alias}'`
+        out += ` aggregate='${attr.aggregate}'`
     }
     if (attr.distinct) {
         out += ` distinct='true'`
