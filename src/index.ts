@@ -207,7 +207,7 @@ export class TextOperator extends ColumnOperator {
      * @returns The condition string.
      */
     like(value: number | string,): string {
-        return `<condition attribute='${this.logicalName}' operator='not-like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
+        return `<condition attribute='${this.logicalName}' operator='like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
     /**
@@ -216,7 +216,7 @@ export class TextOperator extends ColumnOperator {
      * @returns The condition string.
      */
     notLike(value: number | string,): string {
-        return `<condition attribute='${this.logicalName}' operator='like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
+        return `<condition attribute='${this.logicalName}' operator='not-like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
     /**
@@ -537,6 +537,10 @@ export interface IAttribute {
 
     /**
      * An alternative name for the attribute in the result set
+     * Notes:
+     * Alias must be unique across all attributes in the query.
+     * For link-entity attribute, if you want to return formatted value for choice and lookup columns, provide an alias.
+     * For link-enttity attribute, if you make the alias the same as the attribute name, the attribute is not returned at all.
      */
     alias?: string;
 
