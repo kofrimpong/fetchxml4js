@@ -114,7 +114,7 @@ export class ColumnOperator extends Operator {
      * @param {number | string} value - The value to compare.
      * @returns {string} The condition string.
      */
-    equalTo(value: number | string,): string {
+    equalTo(value: number | string): string {
         return `<condition attribute='${this.logicalName}' operator='eq' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -123,7 +123,7 @@ export class ColumnOperator extends Operator {
      * @param {number | string} value - The value to compare.
      * @returns {string} The condition string.
      */
-    notEqualTo(value: number | string,): string {
+    notEqualTo(value: number | string): string {
         return `<condition attribute='${this.logicalName}' operator='ne' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -132,7 +132,7 @@ export class ColumnOperator extends Operator {
      * @param {number[] | string[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    in(arrayOfValues: number[] | string[],) {
+    in(arrayOfValues: number[] | string[]) {
         let builder = `<condition attribute='${this.logicalName}' operator='in'${conditionEntityAlias(this.attrs)}>`;
         for (let i = 0; i < arrayOfValues.length; i++) {
             builder += `<value>${arrayOfValues[i]}</value>`;
@@ -145,7 +145,7 @@ export class ColumnOperator extends Operator {
      * @param {number[] | string[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    notIn(arrayOfValues: number[] | string[],) {
+    notIn(arrayOfValues: number[] | string[]) {
         let builder = `<condition attribute='${this.logicalName}' operator='not-in'${conditionEntityAlias(this.attrs)}>`;
         for (let i = 0; i < arrayOfValues.length; i++) {
             builder += `<value>${arrayOfValues[i]}</value>`;
@@ -206,7 +206,7 @@ export class TextOperator extends ColumnOperator {
      * @param value The value to search for.
      * @returns The condition string.
      */
-    like(value: number | string,): string {
+    like(value: number | string): string {
         return `<condition attribute='${this.logicalName}' operator='like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -215,7 +215,7 @@ export class TextOperator extends ColumnOperator {
      * @param value The value to search for.
      * @returns The condition string.
      */
-    notLike(value: number | string,): string {
+    notLike(value: number | string): string {
         return `<condition attribute='${this.logicalName}' operator='not-like' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -224,7 +224,7 @@ export class TextOperator extends ColumnOperator {
      * @param value The value to search for.
      * @returns The condition string.
      */
-    beginsWith(value: string,): string {
+    beginsWith(value: string): string {
         return `<condition attribute='${this.logicalName}' operator='begins-with' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 }
@@ -260,7 +260,7 @@ export class DateOperator extends Operator {
      * @param value The value to compare with in ISO format.
      * @returns The condition string.
      */
-    on(value: string,) {
+    on(value: string) {
         return `<condition attribute='${this.logicalName}' operator='on' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -269,7 +269,7 @@ export class DateOperator extends Operator {
      * @param value The value to compare with in ISO format.
      * @returns The condition string.
      */
-    onOrBefore(value: string,): string {
+    onOrBefore(value: string): string {
         return `<condition attribute='${this.logicalName}' operator='on-or-before' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -278,7 +278,7 @@ export class DateOperator extends Operator {
      * @param value The value to compare with in ISO format.
      * @returns The condition string.
      */
-    onOrAfter(value: string,): string {
+    onOrAfter(value: string): string {
         return `<condition attribute='${this.logicalName}' operator='on-or-after' value='${value}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -324,7 +324,7 @@ export class LookupOperator extends Operator {
      * @param id The ID value to compare with.
      * @returns The condition string.
      */
-    idEqualTo(id: string,): string {
+    idEqualTo(id: string): string {
         return `<condition attribute='${this.logicalName}' operator="eq" value='${sanitizeGuid(id)}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -333,12 +333,50 @@ export class LookupOperator extends Operator {
      * @param arrayOfValues An array of ID values to compare with.
      * @returns The condition string.
      */
-    idIn(arrayOfValues: string[],): string {
+    idIn(arrayOfValues: string[]): string {
         let builder = `<condition attribute='${this.logicalName}' operator='in'${conditionEntityAlias(this.attrs)}>`;
         for (let i = 0; i < arrayOfValues.length; i++) {
             builder += `<value>${arrayOfValues[i]}</value>`;
         }
         return builder += '</condition></In>';
+    }
+}
+
+export class ChoiceColumnOperator extends ColumnOperator {
+    /**
+     * Checks whether the value of the column is equal to the specified value.
+     * @param {number} value - The value to compare.
+     * @returns {string} The condition string.
+     */
+    equalTo(value: number): string {
+        return super.equalTo(value);
+    }
+
+    /**
+     * Checks whether the value of the column is not equal to the specified value.
+     * @param {number} value - The value to compare.
+     * @returns {string} The condition string.
+     */
+    notEqualTo(value: number): string {
+        return super.notEqualTo(value);
+    }
+
+    /**
+     * Checks whether the value of the column is equal to one of the specified values.
+     * @param {number[]} arrayOfValues - Array of values to compare.
+     * @returns {string} The condition string.
+     */
+    in(arrayOfValues: number[]) {
+        return super.in(arrayOfValues);
+    }
+
+    /**
+     * Checks whether the value of the column is not equal to one of the specified values.
+     * @param {number[]} arrayOfValues - Array of values to compare.
+     * @returns {string} The condition string.
+     */
+    notIn(arrayOfValues: number[]) {
+        return super.notIn(arrayOfValues);
     }
 }
 
@@ -352,7 +390,7 @@ export class UserOperator extends Operator {
      * @param id The ID value to compare.
      * @returns Condition string.
      */
-    idEqualTo(id: string,): string {
+    idEqualTo(id: string): string {
         return `<condition attribute='${this.logicalName}' uitype='systemuser' operator='eq-userid' value='${id}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -361,7 +399,7 @@ export class UserOperator extends Operator {
      * @param id The ID value to compare.
      * @returns Condition string.
      */
-    idNotEqualTo(id: string,): string {
+    idNotEqualTo(id: string): string {
         return `<condition attribute='${this.logicalName}' operator='ne-userid' value='${id}'${conditionEntityAlias(this.attrs)} />`;
     }
 
@@ -690,7 +728,7 @@ export const idColumn = (logicalName: string, attrs?: IConditionAttribute): Colu
  * @returns An instance of FieldOperator for the specified choice column.
  */
 export const choiceColumn = (logicalName: string, attrs?: IConditionAttribute): ColumnOperator => {
-    return new ColumnOperator(logicalName, attrs);
+    return new ChoiceColumnOperator(logicalName, attrs);
 };
 
 /**
