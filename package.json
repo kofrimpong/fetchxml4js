@@ -1,6 +1,6 @@
 {
   "name": "fetchxml4js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A declarative JavaScript library for creating Dataverse fetchxml queries",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
