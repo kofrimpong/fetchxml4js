@@ -132,7 +132,7 @@ export class ColumnOperator extends Operator {
      * @param {number[] | string[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    in(arrayOfValues: number[] | string[]) {
+    in(arrayOfValues: number[] | string[]): string {
         let builder = `<condition attribute='${this.logicalName}' operator='in'${conditionEntityAlias(this.attrs)}>`;
         for (let i = 0; i < arrayOfValues.length; i++) {
             builder += `<value>${arrayOfValues[i]}</value>`;
@@ -145,7 +145,7 @@ export class ColumnOperator extends Operator {
      * @param {number[] | string[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    notIn(arrayOfValues: number[] | string[]) {
+    notIn(arrayOfValues: number[] | string[]): string {
         let builder = `<condition attribute='${this.logicalName}' operator='not-in'${conditionEntityAlias(this.attrs)}>`;
         for (let i = 0; i < arrayOfValues.length; i++) {
             builder += `<value>${arrayOfValues[i]}</value>`;
@@ -366,7 +366,7 @@ export class ChoiceColumnOperator extends ColumnOperator {
      * @param {number[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    in(arrayOfValues: number[]) {
+    in(arrayOfValues: number[]): string {
         return super.in(arrayOfValues);
     }
 
@@ -375,7 +375,7 @@ export class ChoiceColumnOperator extends ColumnOperator {
      * @param {number[]} arrayOfValues - Array of values to compare.
      * @returns {string} The condition string.
      */
-    notIn(arrayOfValues: number[]) {
+    notIn(arrayOfValues: number[]): string {
         return super.notIn(arrayOfValues);
     }
 }
