@@ -500,12 +500,12 @@ export interface ILinkEntity {
     type?: LinkType;
 
     /**
-     * Refers to the attribute of the entity parent node.
+     * Refers to the logical name of the column of the entity parent node.
      */
     to: string;
 
     /**
-     * Always refers to the attribute in the same entity as the link-entity node.
+     * Always refers to the logical name of the column in the same entity as the link-entity node.
      */
     from: string;
 
@@ -515,7 +515,7 @@ export interface ILinkEntity {
     alias: string;
 
     /**
-     * Entity to join to.
+     * The the logical name of the table that you are linking to.
      */
     entity: string;
     /**
@@ -683,11 +683,11 @@ const genFetch = (attr: IFetchOption) => {
 /**
  * Generates a fetchxml query.
  * @param fetch The fetch options.
- * @param inputs The fetch inputs.
+ * @param elements The fetch inputs.
  * @returns The generated fetchxml string.
  */
-export const fetchxml = (fetch: IFetchOption, ...inputs: string[]): string => {
-    return `<fetch${genFetch(fetch)}><entity name='${fetch.entity}'>${inputs.join('')}</entity></fetch>`;
+export const fetchxml = (fetch: IFetchOption, ...elements: string[]): string => {
+    return `<fetch${genFetch(fetch)}><entity name='${fetch.entity}'>${elements.join('')}</entity></fetch>`;
 };
 
 export interface IOrderBy {
